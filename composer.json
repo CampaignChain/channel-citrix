@@ -1,0 +1,32 @@
+{
+    "name": "campaignchain/channel-citrix",
+    "description": "Connects to Citrix services such as GoToMeeting or GoToWebinar.",
+    "type": "campaignchain-channel",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Sandro Groganz",
+            "email": "sandro@campaignchain.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": { "CampaignChain\\Channel\\CitrixBundle\\": "" }
+    },
+    "extra": {
+        "campaignchain": {
+            "kernel": {
+                "classes": [
+                    "CampaignChain\\Channel\\CitrixBundle\\CampaignChainChannelCitrixBundle"
+                ],
+                "routing":
+                {
+                    "name": "campaignchain_channel_citrix",
+                    "resource": "@CampaignChainChannelCitrixBundle/Resources/config/routing.yml",
+                    "prefix": "/"
+                }
+            }
+        }
+    }
+}
