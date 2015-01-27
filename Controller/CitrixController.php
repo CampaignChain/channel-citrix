@@ -45,7 +45,7 @@ class CitrixController extends Controller
             return $this->render(
                 'CampaignChainChannelCitrixBundle:Create:index.html.twig',
                 array(
-                    'page_title' => 'Connect with Citrix',
+                    'page_title' => 'Connect with GoToWebinar',
                     'app_id' => $application->getKey(),
                 )
             );
