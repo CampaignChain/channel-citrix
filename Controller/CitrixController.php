@@ -73,14 +73,6 @@ class CitrixController extends Controller
                     $location->setIdentifier($profile->identifier);
                     $location->setName($profile->displayName);
                     $location->setLocationModule($locationModule);
-                    $location->setImage(
-                        $this->container->get('templating.helper.assets')
-                        ->getUrl(
-                            'bundles/campaignchainlocationcitrix/images/icons/256x256/gotowebinar.png',
-                            null
-                        )
-                    );
-
                     $wizard->addLocation($location->getIdentifier(), $location);
 
                     $channel = $wizard->persist();
