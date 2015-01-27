@@ -5,7 +5,7 @@
 # For the full copyright and license information, please view the LICENSE
 # file that was distributed with this source code.
 
-campaignchain_channel_citrix_create:
+campaignchain_channel_gotowebinar_create:
     pattern:  /channel/citrix/create
     defaults: { _controller: CampaignChainChannelCitrixBundle:Citrix:create }
 
