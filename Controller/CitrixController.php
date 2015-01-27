@@ -27,6 +27,10 @@ class CitrixController extends Controller
         'secret_labels' => array('secret', 'Consumer Secret'),
         'config_url' => 'https://developer.citrixonline.com/user/me/apps',
         'parameters' => array(),
+        'wrapper' => array(
+            'class'=>'Hybrid_Providers_Citrix',
+            'path' => 'vendor/hybridauth/hybridauth/additional-providers/hybridauth-citrix/Providers/Citrix.php'
+        ),
     );
 
     public function createAction()
