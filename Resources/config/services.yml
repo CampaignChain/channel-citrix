@@ -1,4 +1,12 @@
+# This file is part of the CampaignChain package.
+#
+# (c) Sandro Groganz <sandro@campaignchain.com>
+#
+# For the full copyright and license information, please view the LICENSE
+# file that was distributed with this source code.
+
 services:
-#    campaign_chain_channel_citrix.example:
-#        class: CampaignChain\Channel\CitrixBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    campaignchain.channel.citrix.rest.client:
+        class: CampaignChain\Channel\CitrixBundle\REST\CitrixClient
+        calls:
+            - [setContainer, ["@service_container"]]
