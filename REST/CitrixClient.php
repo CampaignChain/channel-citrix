@@ -84,4 +84,10 @@ class CitrixClient
         $request = $this->client->get('G2W/rest/organizers/'.$this->organizerKey.'/upcomingWebinars');
         return $request->send()->json();
     }
+
+    public function getWebinar($webinarKey)
+    {
+        $request = $this->client->get('G2W/rest/organizers/'.$this->organizerKey.'/webinars/'.$webinarKey);
+        return $request->send()->json();
+    }
 }
