@@ -29,7 +29,7 @@ class CitrixController extends Controller
         'parameters' => array(),
         'wrapper' => array(
             'class'=>'Hybrid_Providers_Citrix',
-            'path' => 'vendor/hybridauth/hybridauth/additional-providers/hybridauth-citrix/Providers/Citrix.php'
+            'path' => 'vendor/campaignchain/channel-citrix/REST/CitrixOAuth.php'
         ),
     );
 
