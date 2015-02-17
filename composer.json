@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "campaignchain/core": "1.0.0-beta.1",
+        "campaignchain/core": "dev-master",
         "guzzle/guzzle":"~3.9"
     },
     "autoload": {
