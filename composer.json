@@ -1,6 +1,7 @@
 {
     "name": "campaignchain/channel-citrix",
     "description": "Connects to Citrix services such as GoToMeeting or GoToWebinar.",
+    "keywords": ["gotowebinar","campaignchain"],
     "type": "campaignchain-channel",
     "license": "Apache-2.0",
     "authors": [
