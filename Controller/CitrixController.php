@@ -59,8 +59,8 @@ class CitrixController extends Controller
 
             if($status){
                 try {
-                    $repository = $this->getDoctrine()->getManager();
-                    $repository->getConnection()->beginTransaction();
+                    $em = $this->getDoctrine()->getManager();
+                    $em->getConnection()->beginTransaction();
 
                     $wizard = $this->get('campaignchain.core.channel.wizard');
                     $wizard->setName($profile->displayName);
@@ -88,17 +88,17 @@ class CitrixController extends Controller
                     $user->setLastName($profile->lastName);
                     $user->setEmail($profile->email);
 
-                    $repository->persist($user);
-                    $repository->flush();
+                    $em->persist($user);
+                    $em->flush();
 
-                    $repository->getConnection()->commit();
+                    $em->getConnection()->commit();
 
                     $this->get('session')->getFlashBag()->add(
                         'success',
                         'The Citrix location <a href="#">'.$profile->displayName.'</a> was connected successfully.'
                     );
                 } catch (\Exception $e) {
-                    $repository->getConnection()->rollback();
+                    $em->getConnection()->rollback();
                     throw $e;
                 }
             } else {
