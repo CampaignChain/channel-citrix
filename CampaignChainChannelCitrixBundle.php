@@ -17,8 +17,13 @@
 
 namespace CampaignChain\Channel\CitrixBundle;
 
+use CampaignChain\Channel\CitrixBundle\DependencyInjection\CampaignChainChannelCitrixExtension;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class CampaignChainChannelCitrixBundle extends Bundle
 {
+    public function getContainerExtension()
+    {
+        return new CampaignChainChannelCitrixExtension();
+    }
 }
