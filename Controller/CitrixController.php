@@ -118,7 +118,7 @@ class CitrixController extends Controller
         return $this->render(
             'CampaignChainChannelCitrixBundle:Create:login.html.twig',
             array(
-                'redirect' => $this->generateUrl('campaignchain_core_channel')
+                'redirect' => $this->generateUrl('campaignchain_core_location')
             )
         );
     }
