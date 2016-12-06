@@ -28,6 +28,7 @@ class CitrixClient
 
     protected $container;
 
+    /** @var  Client */
     protected $client;
 
     protected $organizerKey;
@@ -95,6 +96,21 @@ class CitrixClient
     public function getWebinar($webinarKey)
     {
         $request = $this->client->get('G2W/rest/organizers/'.$this->organizerKey.'/webinars/'.$webinarKey);
+        return $request->send()->json();
+    }
+
+    public function updateWebinarDate($webinarKey, \DateTime $startDate, \DateTime $endDate)
+    {
+        $body['times'][0] = array(
+            'startTime' => $startDate->format(\DateTime::ISO8601),
+            'endTime'   => $endDate->format(\DateTime::ISO8601),
+        );
+
+        $request = $this->client->put(
+            'G2W/rest/organizers/'.$this->organizerKey.'/webinars/'.$webinarKey,
+            array('Content-Type' => 'application/json'),
+            json_encode($body)
+        );
         return $request->send()->json();
     }
 
