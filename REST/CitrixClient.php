@@ -17,14 +17,15 @@
 
 namespace CampaignChain\Channel\CitrixBundle\REST;
 
+use CampaignChain\CoreBundle\Exception\ExternalApiException;
+use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Guzzle\Http\Client;
 use Guzzle\Plugin\Oauth\OauthPlugin;
 
 class CitrixClient
 {
     const RESOURCE_OWNER = 'Citrix';
-    const BASE_URL   = 'https://api.citrixonline.com';
+    const BASE_URL   = 'https://api.citrixonline.com/';
 
     protected $container;
 
@@ -56,47 +57,37 @@ class CitrixClient
         return $this->connect($application->getKey(), $application->getSecret(), $token->getAccessToken(), $token->getTokenSecret());
     }
 
-    public function connect($appKey, $appSecret, $accessToken, $tokenSecret){
+    public function connect($appKey, $appSecret, $accessToken, $tokenSecret)
+    {
         try {
-            $this->client = new Client(self::BASE_URL);
-            $this->client->setDefaultOption('headers', array('Authorization' => 'OAuth oauth_token='.$accessToken));
+            $this->client = new Client([
+                'base_uri' => self::BASE_URL,
+            ]);
 
             return $this;
+        } catch (\Exception $e) {
+            throw new ExternalApiException($e->getMessage(), $e->getCode());
         }
-        catch (ClientErrorResponseException $e) {
+    }
 
-            $req = $e->getRequest();
-            $resp =$e->getResponse();
-            print_r($resp);die('1');
-        }
-        catch (ServerErrorResponseException $e) {
-
-            $req = $e->getRequest();
-            $resp =$e->getResponse();
-            die('2');
-        }
-        catch (BadResponseException $e) {
-            $req = $e->getRequest();
-            $resp =$e->getResponse();
-            print_r($resp);
-            die('3');
-        }
-        catch( Exception $e){
-            echo "AGH!";
-            die('4');
+    private function request($method, $uri, $body = array())
+    {
+        try {
+            $res = $this->client->request($method, $uri, $body);
+            return json_decode($res->getBody(), true);
+        } catch(\Exception $e){
+            throw new ExternalApiException($e->getMessage(), $e->getCode());
         }
     }
 
     public function getUpcomingWebinars()
     {
-        $request = $this->client->get('G2W/rest/organizers/'.$this->organizerKey.'/upcomingWebinars');
-        return $request->send()->json();
+        return $this->request('GET','G2W/rest/organizers/'.$this->organizerKey.'/upcomingWebinars');
     }
 
     public function getWebinar($webinarKey)
     {
-        $request = $this->client->get('G2W/rest/organizers/'.$this->organizerKey.'/webinars/'.$webinarKey);
-        return $request->send()->json();
+        return $this->request('GET','G2W/rest/organizers/'.$this->organizerKey.'/webinars/'.$webinarKey);
     }
 
     public function updateWebinarDate($webinarKey, \DateTime $startDate, \DateTime $endDate)
@@ -106,17 +97,18 @@ class CitrixClient
             'endTime'   => $endDate->format(\DateTime::ISO8601),
         );
 
-        $request = $this->client->put(
+        return $this->request(
+            'PUT',
             'G2W/rest/organizers/'.$this->organizerKey.'/webinars/'.$webinarKey,
-            array('Content-Type' => 'application/json'),
-            json_encode($body)
+            array(
+                'header' => array('Content-Type' => 'application/json'),
+                'body'   => json_encode($body),
+            )
         );
-        return $request->send()->json();
     }
 
     public function getWebinarSessions($webinarKey)
     {
-        $request = $this->client->get('G2W/rest/organizers/'.$this->organizerKey.'/webinars/'.$webinarKey.'/sessions');
-        return $request->send()->json();
+        return $this->request('GET','G2W/rest/organizers/'.$this->organizerKey.'/webinars/'.$webinarKey.'/sessions');
     }
 }
