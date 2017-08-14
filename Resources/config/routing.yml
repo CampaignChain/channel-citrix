@@ -13,9 +13,9 @@
 # limitations under the License.
 
 campaignchain_channel_gotowebinar_create:
-    pattern:  /channel/citrix/create
+    path:  /channel/citrix/create
     defaults: { _controller: CampaignChainChannelCitrixBundle:Citrix:create }
 
 campaignchain_channel_gotowebinar_login:
-    pattern:  /channel/citrix/create/login
+    path:  /channel/citrix/create/login
     defaults: { _controller: CampaignChainChannelCitrixBundle:Citrix:login }
